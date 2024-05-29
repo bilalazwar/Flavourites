@@ -15,9 +15,18 @@ app.use("/users", require("./routes/userRoutes"));
 app.use("/recipe", require("./routes/recipeRoutes"));
 app.use("/login", require("./routes/userLoginRoutes"))
 
+// Integrate Swagger (after routes)
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerOptions = require('./swagger.js'); // Import your configuration file
+const specs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use(errorHandler);  // have to add at the end.
 
 app.listen(port);
 // app.listen(port,() =>{
 //     console.log(`App Listening on ${port}`);
 // });
+
+// npm install swagger-jsdoc swagger-ui-express

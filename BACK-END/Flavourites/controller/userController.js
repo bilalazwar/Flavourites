@@ -5,6 +5,7 @@ const User = require("../model/userModel");
 // we need to have a errorhandler middleware implemented in ur project when using asyncHandler
 // Then we don't need to write try catch boiler plate code to handle ERROR
 // passes the error caught here to error handling-middleware.
+
 const createUser = asyncHandler(async function(req,res){  // function without name
 
     const{name, email, profilePictureUrl, bio, location} = req.body;

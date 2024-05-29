@@ -60,7 +60,7 @@ const userLogin = asyncHandler( async (req,res) => {
 
     if(userLoginDatabase && (await bcryptjs.compare(password, userLoginDatabase.password))){
         
-        res.status(200).json(userLoginDatabase);        
+        res.status(200).json({message:"successfully logged In"});        
     }
     else{
         res.status(401);
@@ -68,7 +68,23 @@ const userLogin = asyncHandler( async (req,res) => {
     }
 });
 
+const updatePassword = asyncHandler(async function(req,res){
+    const { username, password} = req.body;
+
+    const userLoginDatabase = await UserLogin.findOne({username});
+    const hashPassword = await bcryptjs.hash(password, 10);
+    if(userLoginDatabase){
+        const updatedUserLogin = await UserLogin.findByIdAndUpdate(userLoginDatabase.id, { $set: {password : hashPassword} }, { new: true }); // true is to Return the updated document
+        res.status(200).json(updatedUserLogin);
+    }
+    else{
+        res.status(401);
+        throw new Error("UserLogin with this username does not exist");
+    }
+
+});
 
 
 
-module.exports = { createUserLogin, userLogin };
+
+module.exports = { createUserLogin, userLogin, updatePassword };
