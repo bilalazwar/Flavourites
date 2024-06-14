@@ -2,7 +2,7 @@
 // By default when error caught displays in html format
 // We are using custom error
 
-const errorHandler = (error, req, res, next) => {
+const errorHandler = (error, req, res, next) => {  // not passing to the next error handler if error encounter
 
     const statusCode = req.statusCode ? req.statusCode : 500;
 

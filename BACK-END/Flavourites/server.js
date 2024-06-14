@@ -12,15 +12,8 @@ const port = process.env.PORT || 5001;
 app.use(express.json());  // A middleware provided to convert incoming JSON data (often sent from client-side applications) into a format (JavaScript object) that your Node.js code can easily understand and work with. 
 
 app.use("/users", require("./routes/userRoutes"));
-app.use("/recipe", require("./routes/recipeRoutes"));
+app.use("/recipes", require("./routes/recipeRoutes"));
 app.use("/login", require("./routes/userLoginRoutes"))
-
-// Integrate Swagger (after routes)
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-const swaggerOptions = require('./swagger.js'); // Import your configuration file
-const specs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(errorHandler);  // have to add at the end.
 

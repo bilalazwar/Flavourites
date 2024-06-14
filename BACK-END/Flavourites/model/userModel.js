@@ -38,6 +38,7 @@ module.exports = mongoose.model('UserDetail', userDetailSchema);
 
 // First argument  -: Then name of the model as String.
 //                    This name will be used to create a collection in your MongoDB database and is often capitalized (e.g., User, Product).
+//                    Mongoose will automatically create a plural version of this name (lowercase) for the underlying MongoDB collection
 
 // Second argument -: A Mongoose Schema object.
 //                    This object defines the structure and validation rules for your documents (data entries) in the corresponding collection.

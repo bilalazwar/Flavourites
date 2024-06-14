@@ -5,15 +5,24 @@ const uri = "mongodb://localhost:27017/Flavourites";
 
 const connectDb = async function() {
     try{
-        await mongoose.connect(uri)
-        .then(() => console.log("Connected to MongoDB"))
-        .catch(err => console.error("Error connecting to MongoDB", err));
-
+        await mongoose.connect(uri);
         console.log("Database Connected");
     }
     catch(error){
-        console.log(error);
+        // console.log(error);
+        console.error("Error connecting to MongoDB", err)
     }
 };
 
 module.exports = connectDb;
+
+// try{
+//     await mongoose.connect(uri)
+//     .then(() => console.log("Connected to MongoDB"))
+//     .catch(err => console.error("Error connecting to MongoDB", err));
+
+//     console.log("Database Connected");
+// }
+// catch(error){
+//     console.log(error);
+// }

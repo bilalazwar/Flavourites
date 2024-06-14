@@ -3,6 +3,7 @@ const User = require("../model/userModel");
 const UserLogin = require("../model/userLoginModel");
 const mongoose = require('mongoose');
 const bcryptjs = require("bcryptjs");  // "npm install bcryptjs"
+const jwt = require("jsonwebtoken");   // npm install jsonwebtoken
 
 const createUserLogin = asyncHandler( async function(req,res){
 
@@ -16,7 +17,7 @@ const createUserLogin = asyncHandler( async function(req,res){
     if(!user_id || !username || !password || !userType){
        
         res.status(404);
-        throw new Error("Mandatory field missing");
+        throw new Error("Mandatory fields missing");
     }
 
     const hashPassword = await bcryptjs.hash(password, 10); // second argument salt round
@@ -59,8 +60,33 @@ const userLogin = asyncHandler( async (req,res) => {
     console.log(userLoginDatabase);
 
     if(userLoginDatabase && (await bcryptjs.compare(password, userLoginDatabase.password))){
+
+        // const accessToken = jwt.sign({
+        //     user:{                      // payload
+        //         username: userLoginDatabase.username,
+        //         id: userLoginDatabase.id,
+        //     },
+        // },
+        // process.env.ACCESS_TOKEN,
+        // {expiresIn: "5m"});
+
+        // res.status(200).json({accessToken});
         
-        res.status(200).json({message:"successfully logged In"});        
+        // res.status(200).json({message:"successfully logged In"});   
+        
+        const payload = {
+            username: userLoginDatabase.username,
+            userLoginId: userLoginDatabase.id,
+            userId: userLoginDatabase.user_id,
+            // userIdForeignKey: userLoginDatabase.user_id
+          };
+        const secretKey = process.env.ACCESS_TOKEN;
+        const expirationTime = '2m'
+        
+        const accessToken = jwt.sign(payload, secretKey, { expiresIn: expirationTime });
+        
+        return res.status(200).json({accessToken});
+
     }
     else{
         res.status(401);
@@ -68,18 +94,73 @@ const userLogin = asyncHandler( async (req,res) => {
     }
 });
 
-const updatePassword = asyncHandler(async function(req,res){
-    const { username, password} = req.body;
+// const updatePassword1 = asyncHandler(async function(req,res){
+//     const { username, password} = req.body;
+//     const payloadUsername = req.payload.username;
+//     const payloadId = req.payload.id;
 
-    const userLoginDatabase = await UserLogin.findOne({username});
-    const hashPassword = await bcryptjs.hash(password, 10);
-    if(userLoginDatabase){
-        const updatedUserLogin = await UserLogin.findByIdAndUpdate(userLoginDatabase.id, { $set: {password : hashPassword} }, { new: true }); // true is to Return the updated document
-        res.status(200).json(updatedUserLogin);
+//     // console.log("Payload username == ",req.payload.username);
+//     // console.log("Request body username == ",username);
+
+//     if(!username || !password){
+//         res.status(404);
+//         throw new Error("Mandatory fields missing");
+//     }
+
+//     if(payloadUsername === username){
+
+//         const userLoginDatabase = await UserLogin.findOne({username});
+//         const hashPassword = await bcryptjs.hash(password, 10);
+
+//         if(userLoginDatabase){
+//             const updatedUserLogin = await UserLogin.findByIdAndUpdate(userLoginDatabase.id, { $set: {password : hashPassword} }, { new: true }); // true is to Return the updated document
+//             res.status(200).json(updatedUserLogin);
+//         }
+//         else{
+//             res.status(401);
+//             throw new Error("UserLogin with this username does not exist");
+//         }
+//     }
+//     else{
+//         res.status(401);
+//         throw new Error("Token does not belong to this username");
+
+//     }
+// });
+
+const updatePassword = asyncHandler(async function(req,res){
+
+    const {username, password }= req.body;
+    const JWTTokenUsername =  req.payload.username;
+
+    if(!username || !password){
+        console.log("Empty username and password");
+    }
+
+    if(JWTTokenUsername === username){
+        
+        const userLoginDatabase = await UserLogin.findOne({username: username});
+        const hashPassword = await bcryptjs.hash(password, 10);
+
+        if(userLoginDatabase){
+            
+            const updatedUserLogin = await UserLogin.findByIdAndUpdate(userLoginDatabase.id, { $set: {password : hashPassword} }, { new: true }); // true is to Return the updated document
+            res.status(200).json(updatedUserLogin);
+        }
+        else
+        {
+            res.status(401);
+            throw new Error("UserLogin with this username does not exist");
+        }
+
+        console.log("User ==== ",userLoginDatabase);
+
+        // get from the top method and update
     }
     else{
         res.status(401);
-        throw new Error("UserLogin with this username does not exist");
+        throw new Error("Token does not belong to this username");
+
     }
 
 });
