@@ -84,7 +84,7 @@ All the REST end-points for different routes
 ### User-Controller
 ---------------------------------------------------
 
-- JWT Token necessary ( admin & User) for all requests.
+- JWT Token necessary (admin & User).
 
 **Create new User**
 
