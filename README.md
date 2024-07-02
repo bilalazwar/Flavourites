@@ -12,7 +12,8 @@ A secure recipe sharing app built with the MERN stack. Users can manage their ow
 
 ## Status
 
-ON-PROGRESS.
+- Back-End  - Done.
+- Front-End - ONPROGRESS.
 
 ## Role
 
