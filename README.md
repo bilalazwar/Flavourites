@@ -3,10 +3,6 @@
 
 A secure recipe sharing app built with the MERN stack. Users can manage their own recipes, rate others, and find inspiration – all with `JWT Token` authentication.
 
-## Functionality
-
-It allows users to share their culinary creations, rate recipes, and engage in discussions. This fosters a collaborative environment where the community helps validate recipes and ensures their success.
-
 ## Technology
 
 - MERN Stack
