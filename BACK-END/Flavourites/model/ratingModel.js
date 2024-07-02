@@ -16,6 +16,10 @@ const ratingModel = mongoose.Schema({
         type: Number,
         required: [true, "Please Enter 1-5"],
     },
+    description:{
+        type: String,
+        required: [true, "Please Enter The description"],
+    },
 });
 
 module.exports = mongoose.model("Ratings", ratingModel);

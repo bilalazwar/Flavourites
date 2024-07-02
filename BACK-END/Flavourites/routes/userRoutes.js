@@ -7,12 +7,14 @@ const {createUser, getAllUsers, getUserById, getUserByEmail, deleteUserById, upd
 router.post("/", createUser);
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
+router.get("/:email", getUserByEmail);
 router.get("/location/:location", getUsersByLocation);
 router.delete("/:id", deleteUserById);
 // router.delete("/:id", deleteUser);
 // router.delete("/", deleteAllUser);
 router.put("/:id", updateUserByID);
-// router.patch("/:id", deleteUser);
 
 
 module.exports = router;
+
+// for this add JWT Token and when the payload shows admin only display

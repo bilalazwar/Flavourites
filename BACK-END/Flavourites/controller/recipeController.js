@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const recipeModel = require("../model/recipeModel");
 
 
-
+// or else we have to write try catch block for everything
 const createRecipe = asyncHandler(async function(req,res){
 
     // Before posting check if the passed user_id the body belongs to the user in JWT Token
@@ -20,7 +20,7 @@ const createRecipe = asyncHandler(async function(req,res){
         res.status(400);
         throw new Error("Invalid user_id format. Must be a valid ID");
     }
-    const userDatabase = UserDetail.findById(user_id);
+    const userDatabase = await UserDetail.findById(user_id);
     if(!userDatabase){
         res.status(404);
         throw new Error("Invalid ID, unable to create recipe");
@@ -43,6 +43,7 @@ const createRecipe = asyncHandler(async function(req,res){
         prepTime,
         imageUrl,
     });
+    
     console.log(newRecipe);
     if(!newRecipe){
         res.status(404);

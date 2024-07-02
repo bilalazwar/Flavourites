@@ -23,3 +23,8 @@ app.listen(port);
 // });
 
 // npm install swagger-jsdoc swagger-ui-express
+
+
+// cd back-end
+// cd flavourites
+// node server.js
