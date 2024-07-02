@@ -81,52 +81,6 @@ ON-PROGRESS.
 ## Controllers
 All the REST end-points for different routes
 
-### UserLogin-Controller
----------------------------------------------------
-
-This is subheading.
-
-**Sign IN**
-
-```sh
-http://localhost:5000/login/register     ----->  Method: POST
-```
-```json
-{
-  "userId": "",  // foreign key
-  "username": "", 
-  "password": "",
-  "userType": "",
-}
-```
-
-**Login**
-* Upon validation generates JWT Token.
-
-```sh
-http://localhost:5000/login         ----->  Method: POST
-```
-```json
-{
-  "username": "", 
-  "password": "",
-}
-```
-
-**Update Password**
-* JWT Token necessary.
-* Validate the JWT username and request body username are the  same?
-
-```sh
-http://localhost:5000/login        ----->  Method: PUT
-```
-```json
-{
-  "username": "",
-  "password": "",
-}
-```
-
 ### User-Controller
 ---------------------------------------------------
 
@@ -179,6 +133,51 @@ http://localhost:5000/users/:user_id        ----->  Method: DELETE
 http://localhost:5000/users/:user_id        ----->  Method: PUT
 ```
 
+### UserLogin-Controller
+---------------------------------------------------
+
+This is subheading.
+
+**Sign IN**
+
+```sh
+http://localhost:5000/login/register     ----->  Method: POST
+```
+```json
+{
+  "userId": "",  // foreign key
+  "username": "", 
+  "password": "",
+  "userType": "",
+}
+```
+
+**Login**
+* Upon validation generates JWT Token.
+
+```sh
+http://localhost:5000/login         ----->  Method: POST
+```
+```json
+{
+  "username": "", 
+  "password": "",
+}
+```
+
+**Update Password**
+* JWT Token necessary.
+* Validate the JWT username and request body username are the  same?
+
+```sh
+http://localhost:5000/login        ----->  Method: PUT
+```
+```json
+{
+  "username": "",
+  "password": "",
+}
+```
 
 ### Recipe-Controller
 
