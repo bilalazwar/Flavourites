@@ -28,7 +28,7 @@ ON-PROGRESS.
 
 | ER Diagram |
 |---|
-| ![ER Diagram](pictures/flavouritesRecipeER.png) |
+| ![ER Diagram](pictures/FlavouritesER.png) |
 
 **User-Entity:**
 
